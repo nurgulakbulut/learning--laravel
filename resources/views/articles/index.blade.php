@@ -3,8 +3,11 @@
     <ul>
    @foreach ($articles as $article )
       <li>
-      <a href="/articles/{{ $article->id }}"></a>
-          {{$article->title}}
-       </li>
+            <a href="/articles/{{ $article->id }}">
+                 {{$article->title}}
+            </a>
+      </li>
    @endforeach
    </ul>
+<hr>
+<a href="/articles/new"> Yeni Article Ekle </a>

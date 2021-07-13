@@ -9,7 +9,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles=Article::all();
+        $articles=Article::latest()->get();
         return view("articles.index",compact('articles'));
     }
 
@@ -20,12 +20,20 @@ class ArticleController extends Controller
 
      public function show($id)
     {
-        $article=Article::find($id);
+        $article=Article::findOrFail($id);
          return view("articles.detail",compact('article'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        return "Yeni article ekleme islemi";
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required | string | min:3',
+        ]);
+        $article = new Article;
+        $article->title = $request->title;
+        $article->content = $request->content;
+        $article->save();
+        return redirect('/articles/' . $article->id);
     }
 }
